@@ -1,4 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+import styled from 'styled-components'
+
+const InputText = styled.input`
+  margin: 2% 0%;
+  text-align: center;
+`;
+
+const Container = styled.section`
+  text-align: center;
+`;
 
 const SearchForm = (props) => {
 
@@ -6,9 +16,9 @@ const SearchForm = (props) => {
     event.preventDefault();
   }
   return (
-    <section className="search-form">
+    <Container className="search-form">
      <form onSubmit={submit}>
-       <input 
+       <InputText 
        type='text'
        onChange={props.handleInputChange}
        value={props.query}
@@ -17,7 +27,7 @@ const SearchForm = (props) => {
        autoComplete='off'
        />
      </form>
-    </section>
+    </Container>
   );
 }
 

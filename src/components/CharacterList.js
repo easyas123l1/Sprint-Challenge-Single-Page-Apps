@@ -2,7 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import CharacterCard from './CharacterCard';
 import SearchForm from "./SearchForm";
+import styled from 'styled-components';
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
+
+const Container2 = styled.div`
+  width: 45%;
+  margin: 5px;
+`;
 const CharacterList = () => {
   const [query, setQuery] = useState('');
   const [characters, setCharacters] = useState([])
@@ -45,14 +56,16 @@ const CharacterList = () => {
   }
 
   return (
-    <section className="character-list">
+    <div>
       <SearchForm handleInputChange={handleInputChange} query={query}/>
-      {characters.map(character => (
-        <div key={character.id}>
-          <CharacterCard key={character.id} character={character} />
-        </div>
-      ))}
-    </section>
+      <Container className="character-list">
+        {characters.map(character => (
+          <Container2 key={character.id}>
+            <CharacterCard key={character.id} character={character} />
+          </Container2>
+        ))}
+      </Container>
+    </div>
   );
 }
  
