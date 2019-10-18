@@ -23,7 +23,7 @@ const CharacterList = () => {
     let tempData = [];
     async function getCharacters() {
       try {
-        let tryaxios = await axios.get(`https://rickandmortyapi.com/api/character/`)
+        let tryaxios = await axios.get(`https://rick-api.herokuapp.com/api/character/`)
           arr.push(tryaxios.data.results);
           let arr2 = arr[0].filter(character => {
             return character.name.toLowerCase().includes(query.toLowerCase())
