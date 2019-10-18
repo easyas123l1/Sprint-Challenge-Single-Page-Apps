@@ -31,7 +31,6 @@ const CharacterList = () => {
                 tempData.push(arr2[i]);
               }
             }
-            //this is probably where i want to do .includes
             setCharacters(tempData);
           }
           catch(error) {
@@ -41,9 +40,13 @@ const CharacterList = () => {
     getCharacters();
   }, [query]);
 
+  const handleInputChange = event => {
+    setQuery(event.target.value)
+  }
+
   return (
     <section className="character-list">
-      <SearchForm />
+      <SearchForm handleInputChange={handleInputChange} query={query}/>
       {characters.map(character => (
         <div key={character.id}>
           <CharacterCard key={character.id} character={character} />

@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 
-const SearchForm = () => {
- 
-    const [data, setData] = useState([]);
-    const [query, setQuery] = useState('');
-    
+const SearchForm = (props) => {
 
-    const handleInputChange = event => {
-      setQuery(event.target.value)
-    }
-
+  const submit = event => {
+    event.preventDefault();
+  }
   return (
     <section className="search-form">
-     <form>
+     <form onSubmit={submit}>
        <input 
        type='text'
-       onChange={handleInputChange}
-       value={query}
+       onChange={props.handleInputChange}
+       value={props.query}
        name='name'
        placeholder='search by name'
        autoComplete='off'
