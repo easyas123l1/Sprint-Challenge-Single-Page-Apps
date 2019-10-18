@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import CharacterCard from './CharacterCard';
+import SearchForm from "./SearchForm";
 
-export default function CharacterList() {
+const CharacterList = () => {
+  const [query, setQuery] = useState('');
   const [characters, setCharacters] = useState([])
 
   useEffect(() => {
@@ -12,15 +14,21 @@ export default function CharacterList() {
       try {
         let tryaxios = await axios.get(`https://rickandmortyapi.com/api/character/`)
           arr.push(tryaxios.data.results);
-          for (let i = 0; i < arr[0].length; i++) {
-            tempData.push(arr[0][i]);
+          let arr2 = arr[0].filter(character => {
+            return character.name.toLowerCase().includes(query.toLowerCase())
+          })
+          for (let i = 0; i < arr2.length; i++) {
+            tempData.push(arr2[i]);
           }
           while (tryaxios.data.info.next) {
             arr = [];
             tryaxios = await axios.get(tryaxios.data.info.next) 
               arr.push(tryaxios.data.results);
-              for (let i = 0; i < arr[0].length; i++) {
-                tempData.push(arr[0][i]);
+              let arr2 = arr[0].filter(character => {
+                return character.name.toLowerCase().includes(query.toLowerCase())
+              })
+              for (let i = 0; i < arr2.length; i++) {
+                tempData.push(arr2[i]);
               }
             }
             //this is probably where i want to do .includes
@@ -31,10 +39,11 @@ export default function CharacterList() {
           }
         }
     getCharacters();
-  }, []);
+  }, [query]);
 
   return (
     <section className="character-list">
+      <SearchForm />
       {characters.map(character => (
         <div key={character.id}>
           <CharacterCard key={character.id} character={character} />
@@ -43,3 +52,5 @@ export default function CharacterList() {
     </section>
   );
 }
+ 
+export default CharacterList;
