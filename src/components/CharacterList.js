@@ -10,7 +10,7 @@ export default function CharacterList() {
     const getCharacters = () => {
       axios.get(`https://rickandmortyapi.com/api/character/`)
       .then(response => {
-        setCharacters(response.data);
+        setCharacters(response.data.results);
       })
       .catch(error => {
         console.log('server error', error);
@@ -22,10 +22,9 @@ export default function CharacterList() {
 
   return (
     <section className="character-list">
-      <h2>TODO: `array.map()` over your state here!</h2>
       {characters.map(character => (
         <div>
-          <Link key={character.id} to={`/movies/${character.id}`} ><CharacterCard key={character.id} character={character} /></Link>
+          <Link key={character.id} to={`/character/${character.id}`} ><CharacterCard key={character.id} character={character} /></Link>
         </div>
       ))}
     </section>
