@@ -12,12 +12,13 @@ const Container = styled.div`
 `;
 
 const Container2 = styled.div`
-  width: 45%;
+  width: 15%;
   margin: 5px;
 `;
 const CharacterList = () => {
   const [query, setQuery] = useState('');
-  const [characters, setCharacters] = useState([])
+  const [characters, setCharacters] = useState([]);
+  const [tempCharacters, setTempCharacters] = useState([]);
 
   useEffect(() => {
     let arr = [];
@@ -26,31 +27,34 @@ const CharacterList = () => {
       try {
         let tryaxios = await axios.get(`https://rick-api.herokuapp.com/api/character/`)
           arr.push(tryaxios.data.results);
-          let arr2 = arr[0].filter(character => {
-            return character.name.toLowerCase().includes(query.toLowerCase())
-          })
-          for (let i = 0; i < arr2.length; i++) {
-            tempData.push(arr2[i]);
+          for (let i = 0; i < arr[0].length; i++) {
+            tempData.push(arr[0][i]);
           }
           while (tryaxios.data.info.next) {
             arr = [];
             tryaxios = await axios.get(tryaxios.data.info.next) 
               arr.push(tryaxios.data.results);
-              let arr2 = arr[0].filter(character => {
-                return character.name.toLowerCase().includes(query.toLowerCase())
-              })
-              for (let i = 0; i < arr2.length; i++) {
-                tempData.push(arr2[i]);
+              for (let i = 0; i < arr[0].length; i++) {
+                tempData.push(arr[0][i]);
               }
             }
-            setCharacters(tempData);
+            setTempCharacters(tempData);
           }
           catch(error) {
             console.log(error);
           }
         }
     getCharacters();
-  }, [query]);
+  }, []);
+
+  useEffect(() => {
+    let arr = tempCharacters.filter(character => {
+      return character.name.toLowerCase().includes(query.toLowerCase())
+    })
+    setCharacters(arr);
+
+    //this is the first thing to change.  This should accept query and update a new array so that we dont call our api for every time we wanna update the list of characters.
+  }, [query, tempCharacters])
 
   const handleInputChange = event => {
     setQuery(event.target.value)
