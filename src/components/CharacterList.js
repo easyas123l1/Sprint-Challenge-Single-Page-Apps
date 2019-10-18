@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 const Container2 = styled.div`
-  width: 15%;
+  width: 45%;
   margin: 5px;
 `;
 const CharacterList = () => {
@@ -53,7 +53,6 @@ const CharacterList = () => {
     })
     setCharacters(arr);
 
-    //this is the first thing to change.  This should accept query and update a new array so that we dont call our api for every time we wanna update the list of characters.
   }, [query, tempCharacters])
 
   const handleInputChange = event => {
